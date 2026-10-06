@@ -2,42 +2,78 @@ package org.example.teleexpertisemedicale.dao;
 
 import jakarta.persistence.EntityManager;
 import org.example.teleexpertisemedicale.entity.Patient;
+import org.example.teleexpertisemedicale.util.JPAUtil;
 
 import java.util.List;
 import java.util.Optional;
 
 public class PatientDAO {
-    private final EntityManager entityManager;
 
-    public PatientDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    public void save(Patient patient) {
-        entityManager.persist(patient);
+    public Patient save(Patient patient) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            if (patient.getId() == null) {
+                em.persist(patient);
+            } else {
+                patient = em.merge(patient);
+            }
+            em.getTransaction().commit();
+            return patient;
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     public Optional<Patient> findById(Long id) {
-        Patient patient = entityManager.find(Patient.class, id);
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return Optional.ofNullable(em.find(Patient.class, id));
+        } finally {
+            em.close();
+        }
+    }
 
-        return Optional.ofNullable(patient);
+    public Patient findByNumeroSecuriteSociale(String numero) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            List<Patient> resultat = em.createQuery(
+                            "SELECT p FROM Patient p WHERE p.numeroSecuriteSociale = :numero", Patient.class)
+                    .setParameter("numero", numero)
+                    .getResultList();
+            return resultat.isEmpty() ? null : resultat.get(0);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Patient> rechercher(String texte) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery(
+                            "SELECT p FROM Patient p WHERE p.numeroSecuriteSociale = :texte "
+                                    + "OR LOWER(p.nom) LIKE :motif OR LOWER(p.prenom) LIKE :motif",
+                            Patient.class)
+                    .setParameter("texte", texte)
+                    .setParameter("motif", "%" + texte.toLowerCase() + "%")
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     public List<Patient> findAll() {
-        return entityManager
-                .createQuery("SELECT p FROM Patient p", Patient.class)
-                .getResultList();
-    }
-
-    public void update(Patient patient) {
-        entityManager.merge(patient);
-    }
-
-    public void delete(Patient patient) {
-        entityManager.remove(
-                entityManager.contains(patient)
-                        ? patient
-                        : entityManager.merge(patient)
-        );
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM Patient p", Patient.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 }
