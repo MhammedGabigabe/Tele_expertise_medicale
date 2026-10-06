@@ -13,29 +13,24 @@ public class Patient {
     private Long id;
 
     private String nom;
-
     private String prenom;
-
     private LocalDate dateNaissance;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String numeroSecuriteSociale;
 
     private String telephone;
-
     private String adresse;
+    private String mutuelle;
 
-    private Double tensionArterielle;
+    @Column(columnDefinition = "TEXT")
+    private String antecedents;
 
-    private Integer frequenceCardiaque;
+    @Column(columnDefinition = "TEXT")
+    private String allergies;
 
-    private Double temperature;
-
-    private Integer frequenceRespiratoire;
-
-    private Double poids;
-
-    private Double taille;
+    @Column(columnDefinition = "TEXT")
+    private String traitementsEnCours;
 
     public Patient() {
     }
@@ -43,11 +38,13 @@ public class Patient {
     public Long getId() {
         return id;
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
     }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -55,7 +52,6 @@ public class Patient {
     public String getPrenom() {
         return prenom;
     }
-
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
@@ -63,7 +59,6 @@ public class Patient {
     public LocalDate getDateNaissance() {
         return dateNaissance;
     }
-
     public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
@@ -71,7 +66,6 @@ public class Patient {
     public String getNumeroSecuriteSociale() {
         return numeroSecuriteSociale;
     }
-
     public void setNumeroSecuriteSociale(String numeroSecuriteSociale) {
         this.numeroSecuriteSociale = numeroSecuriteSociale;
     }
@@ -79,7 +73,6 @@ public class Patient {
     public String getTelephone() {
         return telephone;
     }
-
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
@@ -87,56 +80,36 @@ public class Patient {
     public String getAdresse() {
         return adresse;
     }
-
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
 
-    public Double getTensionArterielle() {
-        return tensionArterielle;
+    public String getMutuelle() {
+        return mutuelle;
+    }
+    public void setMutuelle(String mutuelle) {
+        this.mutuelle = mutuelle;
     }
 
-    public void setTensionArterielle(Double tensionArterielle) {
-        this.tensionArterielle = tensionArterielle;
+    public String getAntecedents() {
+        return antecedents;
+    }
+    public void setAntecedents(String antecedents) {
+        this.antecedents = antecedents;
     }
 
-    public Integer getFrequenceCardiaque() {
-        return frequenceCardiaque;
+    public String getAllergies() {
+        return allergies;
+    }
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
     }
 
-    public void setFrequenceCardiaque(Integer frequenceCardiaque) {
-        this.frequenceCardiaque = frequenceCardiaque;
+    public String getTraitementsEnCours() {
+        return traitementsEnCours;
+    }
+    public void setTraitementsEnCours(String traitementsEnCours) {
+        this.traitementsEnCours = traitementsEnCours;
     }
 
-    public Double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
-    }
-
-    public Integer getFrequenceRespiratoire() {
-        return frequenceRespiratoire;
-    }
-
-    public void setFrequenceRespiratoire(Integer frequenceRespiratoire) {
-        this.frequenceRespiratoire = frequenceRespiratoire;
-    }
-
-    public Double getPoids() {
-        return poids;
-    }
-
-    public void setPoids(Double poids) {
-        this.poids = poids;
-    }
-
-    public Double getTaille() {
-        return taille;
-    }
-
-    public void setTaille(Double taille) {
-        this.taille = taille;
-    }
 }
