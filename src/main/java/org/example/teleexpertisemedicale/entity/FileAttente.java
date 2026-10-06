@@ -2,7 +2,7 @@ package org.example.teleexpertisemedicale.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "file_attente")
@@ -20,7 +20,7 @@ public class FileAttente {
     @JoinColumn(name = "signes_vitaux_id")
     private SigneVitaux signesVitaux;
 
-    private LocalDate dateArrivee = LocalDate.now();
+    private LocalDateTime dateArrivee = LocalDateTime.now();
 
     private boolean consulte = false;
 
@@ -50,11 +50,11 @@ public class FileAttente {
         this.signesVitaux = signesVitaux;
     }
 
-    public LocalDate getDateArrivee() {
+    public LocalDateTime getDateArrivee() {
         return dateArrivee;
     }
 
-    public void setDateArrivee(LocalDate dateArrivee) {
+    public void setDateArrivee(LocalDateTime dateArrivee) {
         this.dateArrivee = dateArrivee;
     }
 
