@@ -5,7 +5,7 @@
                                  https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.1">
 
-    <persistence-unit name="teleExpertisePU">
+    <persistence-unit name="teleExpertisePU" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
@@ -13,25 +13,17 @@
 
             <property name="jakarta.persistence.jdbc.driver"
                       value="org.postgresql.Driver"/>
-
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:postgresql://localhost:5432/tele_expertise"/>
-
             <property name="jakarta.persistence.jdbc.user"
                       value="postgres"/>
-
             <property name="jakarta.persistence.jdbc.password"
                       value="admin"/>
 
-            <property name="hibernate.dialect"
-                      value="org.hibernate.dialect.PostgreSQLDialect"/>
-
             <property name="hibernate.show_sql"
                       value="true"/>
-
             <property name="hibernate.format_sql"
                       value="true"/>
-
             <property name="hibernate.hbm2ddl.auto"
                       value="update"/>
 
