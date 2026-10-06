@@ -37,3 +37,10 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Smart Tomcat ###
+.smarttomcat/
+
+### Logs et secrets ###
+*.log
+.env
