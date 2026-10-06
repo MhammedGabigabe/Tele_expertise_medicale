@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import org.example.teleexpertisemedicale.enums.Role;
 import org.example.teleexpertisemedicale.enums.Specialite;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "utilisateurs")
 public class Utilisateur {
@@ -28,7 +26,7 @@ public class Utilisateur {
     @Enumerated(EnumType.STRING)
     private Specialite specialite;
 
-    private BigDecimal tarif;
+    private Double tarif;
 
     public Utilisateur(){}
 
@@ -88,11 +86,11 @@ public class Utilisateur {
         this.specialite = specialite;
     }
 
-    public BigDecimal getTarif() {
+    public Double getTarif() {
         return tarif;
     }
 
-    public void setTarif(BigDecimal tarif) {
+    public void setTarif(Double tarif) {
         this.tarif = tarif;
     }
 }
