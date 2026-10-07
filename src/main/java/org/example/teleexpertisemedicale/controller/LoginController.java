@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.teleexpertisemedicale.entity.Utilisateur;
+import org.example.teleexpertisemedicale.filter.CsrfFilter;
 import org.example.teleexpertisemedicale.service.AuthService;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
+
         String email = req.getParameter("email");
         String motDePasse = req.getParameter("motDePasse");
 
@@ -51,6 +52,7 @@ public class LoginController extends HttpServlet {
         HttpSession session = req.getSession();
         req.changeSessionId();
         session.setAttribute("utilisateur", utilisateur);
+        session.setAttribute(CsrfFilter.NOM_JETON, CsrfFilter.genererJeton());
         session.setMaxInactiveInterval(30 * 60);
 
         resp.sendRedirect(req.getContextPath() + "/accueil");

@@ -23,6 +23,8 @@
     <h2>Connexion</h2>
 
     <form method="post" action="${pageContext.request.contextPath}/login">
+         <input type="hidden" name="csrfToken" value="<c:out value='${sessionScope.csrfToken}'/>">
+
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 
