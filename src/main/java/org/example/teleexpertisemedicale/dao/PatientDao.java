@@ -7,7 +7,7 @@ import org.example.teleexpertisemedicale.util.JPAUtil;
 import java.util.List;
 import java.util.Optional;
 
-public class PatientDAO {
+public class PatientDao {
 
     public Patient save(Patient patient) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -39,14 +39,15 @@ public class PatientDAO {
         }
     }
 
-    public Patient findByNumeroSecuriteSociale(String numero) {
+    public Optional<Patient> findByNumeroSecuriteSociale(String numero) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            List<Patient> resultat = em.createQuery(
+            return em.createQuery(
                             "SELECT p FROM Patient p WHERE p.numeroSecuriteSociale = :numero", Patient.class)
                     .setParameter("numero", numero)
-                    .getResultList();
-            return resultat.isEmpty() ? null : resultat.get(0);
+                    .getResultList()
+                    .stream()
+                    .findFirst();
         } finally {
             em.close();
         }
