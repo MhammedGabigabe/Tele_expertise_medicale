@@ -30,24 +30,23 @@ public class PatientExistantController extends HttpServlet {
         }
 
         req.setAttribute("patient", patient.get());
-
         req.getRequestDispatcher(
                 "/WEB-INF/views/infirmier/admission.jsp"
         ).forward(req, resp);
 
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Optional<Patient> patient = chargerPatient(req);
+        Optional<Patient> resultat = chargerPatient(req);
 
-        if (patient.isEmpty()) {
-            resp.sendRedirect(req.getContextPath()
-                    + "/infirmier/patients/recherche");
+        if (resultat.isEmpty()) {
+            resp.sendRedirect(req.getContextPath() + "/infirmier/patients/recherche");
             return;
         }
+
+        Patient patient = resultat.get();
 
         try {
             SigneVitaux signes = patientService.construireSigneVitaux(
@@ -58,10 +57,10 @@ public class PatientExistantController extends HttpServlet {
                     req.getParameter("poids"),
                     req.getParameter("taille"));
 
-            patientService.accueillirPatientExistant(patient.get().getId(), signes);
+            patientService.accueillirPatientExistant(patient.getId(), signes);
 
             req.getSession().setAttribute("message", "Signes vitaux enregistrés : "
-                    + patient.get().getPrenom() + " " + patient.get().getNom() + " est dans la file d'attente");
+                    + patient.getPrenom() + " " + patient.getNom() + " est dans la file d'attente");
             resp.sendRedirect(req.getContextPath() + "/infirmier/accueil");
             return;
 
@@ -69,7 +68,7 @@ public class PatientExistantController extends HttpServlet {
             req.setAttribute("erreur", e.getMessage());
         }
 
-        req.setAttribute("patient", patient.get());
+        req.setAttribute("patient", patient);
         req.getRequestDispatcher("/WEB-INF/views/infirmier/admission.jsp").forward(req, resp);
     }
 
