@@ -30,7 +30,7 @@ public class PatientService {
     public void accueillirNouveauPatient(Patient patient, SigneVitaux signes) {
         validerPatient(patient);
 
-        if (patientDao.findByNumeroSecuriteSociale(patient.getNumeroSecuriteSociale()) != null) {
+        if (patientDao.findByNumeroSecuriteSociale(patient.getNumeroSecuriteSociale()).isPresent()) {
             throw new IllegalArgumentException("Un patient avec ce numéro de sécurité sociale existe déjà");
         }
 
