@@ -3,6 +3,7 @@ package org.example.teleexpertisemedicale.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "file_attente")
@@ -64,5 +65,9 @@ public class FileAttente {
 
     public void setConsulte(boolean consulte) {
         this.consulte = consulte;
+    }
+
+    public String getHeureArrivee() {
+        return dateArrivee.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 }
