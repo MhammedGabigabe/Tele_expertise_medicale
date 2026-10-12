@@ -6,6 +6,7 @@ import org.example.teleexpertisemedicale.entity.FileAttente;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class FileAttenteService {
 
@@ -21,6 +22,14 @@ public class FileAttenteService {
                         && f.getDateArrivee().toLocalDate().equals(jour))
                 .sorted(Comparator.comparing(FileAttente::getDateArrivee))
                 .toList();
+    }
+
+    public List<FileAttente> enAttente() {
+        return fileAttenteDao.findEnAttente();
+    }
+
+    public Optional<FileAttente> trouverEntree(Long id) {
+        return fileAttenteDao.findById(id);
     }
 
 }
